@@ -64,38 +64,39 @@ class MainActivity : AppCompatActivity(){
             }
 
             //cuadrantes
-            canvas.drawLine(cx,cy,1040f,cy,paint)
-            canvas.drawLine(cx,cy,40f,cy,paint)
-            canvas.drawLine(cx,cy,cx,532f,paint)
-            canvas.drawLine(cx,cy,cx,1532f,paint)
+            canvas.drawLine(cx,cy,cx + MAX_RADIO,cy,paint)
+            canvas.drawLine(cx,cy,cx - MAX_RADIO,cy,paint)
+            canvas.drawLine(cx,cy,cx,cy - MAX_RADIO,paint)
+            canvas.drawLine(cx,cy,cx,cy + MAX_RADIO,paint)
 
             //timon
             paint.style = Paint.Style.FILL
             paint.color = Color.YELLOW
+            var dx = MAX_RADIO*Math.abs(relX).div(amplitud).toFloat()
+            var dy = MAX_RADIO*Math.abs(relY).div(amplitud).toFloat()
 
             when (accion) {
                 "DOWN" -> {
                     Log.i("KIRCHOFFF", "Cuadrante " + cuadrante)
                     paint.color = Color.GREEN
+
                     if (amplitud >= MAX_RADIO){
                         when (cuadrante) {
                             1 -> {
-                                dX = MAX_RADIO*Math.abs(relX).div(amplitud).toFloat() + cx
-                                dY = cy - MAX_RADIO*Math.abs(relY).div(amplitud).toFloat()
+                                dX = dx + cx
+                                dY = cy - dy
                             }
                             2 -> {
-                                dX = cx - MAX_RADIO*Math.abs(relX).div(amplitud).toFloat()
-                                dY = cy - MAX_RADIO*Math.abs(relY).div(amplitud).toFloat()
+                                dX = cx - dx
+                                dY = cy - dy
                                 }
                             3 -> {
-                                dX = cx - MAX_RADIO*Math.abs(relX).div(amplitud).toFloat()
-                                dY = cy + MAX_RADIO*Math.abs(relY).div(amplitud).toFloat()
-                                Log.i("KIRCHOFFF", "relX = " + relX + " relY = " + relY)
-                                Log.i("KIRCHOFFF", "X = " + dX + " Y = " + dY)
-                            }
+                                dX = cx - dx
+                                dY = cy + dy
+                           }
                             4 -> {
-                                dX = MAX_RADIO*Math.abs(relX).div(amplitud).toFloat() + cx
-                                dY = MAX_RADIO*Math.abs(relY).div(amplitud).toFloat() + cy
+                                dX = dx + cx
+                                dY = dy + cy
                             }
                         }
                     }
@@ -107,25 +108,25 @@ class MainActivity : AppCompatActivity(){
                     if (amplitud >= MAX_RADIO){
                         when (cuadrante) {
                             1 -> {
-                                dX = MAX_RADIO*Math.abs(relX).div(amplitud).toFloat() + cx
-                                dY = cy - MAX_RADIO*Math.abs(relY).div(amplitud).toFloat()
+                                dX = dx + cx
+                                dY = cy - dy
                             }
                             2 -> {
-                                dX = cx - MAX_RADIO*Math.abs(relX).div(amplitud).toFloat()
-                                dY = cy - MAX_RADIO*Math.abs(relY).div(amplitud).toFloat()
+                                dX = cx - dx
+                                dY = cy - dy
                             }
                             3 -> {
-                                dX = cx - MAX_RADIO*Math.abs(relX).div(amplitud).toFloat()
-                                dY = cy + MAX_RADIO*Math.abs(relY).div(amplitud).toFloat()
+                                dX = cx - dx
+                                dY = cy + dy
                             }
                             4 -> {
-                                dX = MAX_RADIO*Math.abs(relX).div(amplitud).toFloat() + cx
-                                dY = MAX_RADIO*Math.abs(relY).div(amplitud).toFloat() + cy
+                                dX = dx + cx
+                                dY = dy + cy
                             }
                         }
                     }
                     canvas.drawCircle(dX, dY, 100f, paint)
-                    Log.i("KIRCHOFFF", "Amplitud = " + amplitud.toString())
+                    //Log.i("KIRCHOFFF", "Amplitud = " + amplitud.toString())
                     Log.i("KIRCHOFFF", "MOVE")
                 }
                 "UP" -> {
@@ -156,8 +157,8 @@ class MainActivity : AppCompatActivity(){
             relY = cy - dY
             amplitud = Math.sqrt(Math.pow(dY.toDouble()-cy.toDouble(),2.0)+Math.pow(dX.toDouble()-cx.toDouble(),2.0))
 
-            Log.i("KIRCHOFFF", "Punto absoluto X = " + dX + " Y = " + dY)
-            Log.i("KIRCHOFFF", amplitud.toString())
+            //Log.i("KIRCHOFFF", "Punto absoluto X = " + dX + " Y = " + dY)
+            //Log.i("KIRCHOFFF", amplitud.toString())
 
             if ((relX >= 0) && (relY >= 0)) {cuadrante = 1
             } else {
@@ -169,9 +170,7 @@ class MainActivity : AppCompatActivity(){
                     }
                 }
             }
-            Log.i("KIRCHOFFF", "Cuadrante " + cuadrante.toString())
-
-            //radio = Math.sqrt(Math.pow(dX.toDouble(),dY.toDouble()))
+            //Log.i("KIRCHOFFF", "Cuadrante " + cuadrante.toString())
 
             when(e.action) {
                 MotionEvent.ACTION_DOWN -> {
