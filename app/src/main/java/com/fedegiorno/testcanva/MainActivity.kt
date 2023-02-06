@@ -15,8 +15,6 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.math.sqrt
-
 
 const val MAX_RADIO: Int = 500
 
